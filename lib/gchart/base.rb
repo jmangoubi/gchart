@@ -91,6 +91,20 @@ module GChart
       url_to_try
     end
 
+    
+    # Added this because "write" was getting 
+    # a Encoding::UndefinedConversionError: "\x89" from ASCII-8BIT to UTF-8
+    #Error, this should allow people with >=1.9 to download the charts
+    
+    def download(to_here ="chart.png")
+        writeOut = open(to_here, "wb")
+        writeOut.write(open(to_url).read)
+        writeOut.close
+    end
+    
+    
+    
+    
     # Returns the chart's generated PNG as a blob.
     def fetch
       open(to_url) { |io| io.read }
